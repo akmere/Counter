@@ -21,9 +21,19 @@
                VerticalOptions="Center"
                HorizontalOptions="Center"
                x:Name="label1"/>
-        <Button Text="Reset!"
+        <Button Text="Set!"
                 x:Name="button1"
                 Clicked="button1_Clicked"/>
+
+        <Button Text="Reset!"
+                x:Name="button2"/>
+        <Button Text="Refresh!"
+                x:Name="button3"/>
+        <Label Text="Lol"
+               FontSize="Large"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               x:Name="label4"/>
     </StackLayout>
 	
 
