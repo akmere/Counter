@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Counter"
+             x:Class="Counter.MainPage">
+    <StackLayout
+        VerticalOptions="Center"
+        HorizontalOptions="Center">
+        <Label Text="Lol"
+               FontSize="Large"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               x:Name="label3"/>
+        <Label Text="Lol"
+               FontSize="Large"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               x:Name="label2"/>
+        <Label Text="Lol"
+               FontSize="Large"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               x:Name="label1"/>
+        <Button Text="Reset!"
+                x:Name="button1"
+                Clicked="button1_Clicked"/>
+    </StackLayout>
+	
+
+</ContentPage>
