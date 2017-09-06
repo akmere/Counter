@@ -12,12 +12,13 @@ namespace Exerciser
         public App()
         {
             InitializeComponent();
-
-            MainPage = new Exerciser.MainPage();
+            //MainPage = new AddPage();
+            MainPage = new NavigationPage(new ListViewPage());
         }
 
         protected override void OnStart()
         {
+
             // Handle when your app starts
         }
 
@@ -28,6 +29,7 @@ namespace Exerciser
 
         protected override void OnResume()
         {
+            MainPage = new ListViewPage();
             // Handle when your app resumes
         }
     }

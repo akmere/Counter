@@ -70,7 +70,7 @@ namespace Counter
         {
             DbManager db = new DbManager(dbPath);
             string answer = await MainPage.DisplayActionSheet("Attention", "Confirm", "Cancel", "Are you sure to restart the clock?");
-            if (answer == "yes")
+            if (answer == "Confirm")
             {
                 db.InsertEndTime();
                 Refresh();
