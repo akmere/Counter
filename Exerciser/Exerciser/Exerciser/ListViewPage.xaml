@@ -3,8 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Exerciser.ListViewPage"
              x:Name="LVP"
+             Title="Exerciser"
+             
              >
-    <StackLayout Orientation="Vertical">
+    <StackLayout Orientation="Vertical" Spacing="0">
 
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
 
@@ -22,6 +24,9 @@
         </StackLayout>
             <ListView ItemsSource="{Binding Exercises}"
             ItemTapped="Handle_ItemTapped"
+
+                      
+                      
             CachingStrategy="RecycleElement"
                   x:Name="Pagunia"
                   HeightRequest="300">
@@ -45,25 +50,27 @@
                                WidthRequest="120"
                                HorizontalTextAlignment="Center"
                                TextColor="DarkGoldenrod"
-                               FontSize="Large"
+                               FontSize="Large"                                   
                                />
                             <Button Text="&lt;"
                                 Margin="0,0,0,0"
                                 x:Name="ButtonLess"
                                 Command="{Binding Path=BindingContext.LessCommand, Source={x:Reference Pagunia}}"
-                                CommandParameter="{Binding Name}"/>
+                                CommandParameter="{Binding Name}"
+                                    WidthRequest="120"/>
                             <Label Text="{Binding Repetitions}"
                                Style="{DynamicResource ListItemDetailTextStyle}"
                                VerticalOptions="Center"
                                    HorizontalTextAlignment="Center"
-                               WidthRequest="50"
+                               WidthRequest="60"
                                TextColor="DarkBlue"
                                FontSize="Large" />
                                
                             <Button Text=">"
                                 x:Name="ButtonMore"
                                 Command="{Binding Path=BindingContext.MoreCommand, Source={x:Reference Pagunia}}"
-                                CommandParameter="{Binding Name}"/>
+                                CommandParameter="{Binding Name}"
+                                    WidthRequest="120"/>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>
@@ -85,10 +92,15 @@
     </ListView.ItemTemplate>
     -->
   </ListView>
-        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" >
-            <Label HorizontalTextAlignment="Center" FontSize="Large" WidthRequest="65" Text="Score: " TextColor="DarkBlue"/>
-            <Label x:Name="scoreLabel" HorizontalTextAlignment="Center" WidthRequest="50" FontSize="Large" TextColor="DarkBlue" Text="0"/>
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Start" >
+            <Label Margin="140,0,0,0" FontSize="Large" WidthRequest="80" Text="Score: " TextColor="DarkRed" HorizontalTextAlignment="End"/>
+            <Label x:Name="scoreLabel" HorizontalTextAlignment="Start"  FontSize="Large" TextColor="DarkRed" Text="0"/>
         </StackLayout>
+        <!--<StackLayout Orientation="Horizontal" HorizontalOptions="Start" >
+            <Label Margin="140,0,0,0" FontSize="Large" WidthRequest="80" Text="Weight: " TextColor="DarkRed" HorizontalTextAlignment="End"/>
+            <Label x:Name="weightLabel" HorizontalTextAlignment="Start"  FontSize="Large" TextColor="DarkRed" Text="0"/>
+        </StackLayout>-->
+               
         
         <Button Text="Add" FontSize="Large"
                  Command="{Binding Path=BindingContext.AddCommand, Source={x:Reference Pagunia}}"/>

@@ -15,7 +15,8 @@
                HorizontalOptions="Center"/>
         <Entry HorizontalOptions="Center"
                WidthRequest="150"
-               x:Name="valueEntry"/>
+               x:Name="valueEntry"
+               Keyboard="Telephone"/>
         <Button FontSize="Large"
                 Text="Confirm"
                 HorizontalOptions="Center"

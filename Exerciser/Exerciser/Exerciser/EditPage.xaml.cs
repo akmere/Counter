@@ -35,10 +35,10 @@ namespace Exerciser
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            int c;
-            if (NameEntry.Text != "" && ValueEntry.Text != "" && int.TryParse(ValueEntry.Text, out c))
+            double c;
+            if (NameEntry.Text != "" && ValueEntry.Text != "" && double.TryParse(ValueEntry.Text, out c))
             {
-                db.EditExerciseType(oldName, NameEntry.Text, int.Parse(ValueEntry.Text));
+                db.EditExerciseType(oldName, NameEntry.Text, double.Parse(ValueEntry.Text));
                 NameEntry.Text = "";
                 ValueEntry.Text = "";
                 Navigation.PopAsync();

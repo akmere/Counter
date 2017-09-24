@@ -18,23 +18,7 @@ namespace Exerciser
             db.CreateTable<ExerciseType>();
             db.CreateTable<SDay>();
             db.CreateTable<Rep>();
-
-            //    List<ExerciseType> ListOfExercises = new List<ExerciseType>()
-            //{
-            //    new ExerciseType() {Name = "F-Pull-Up" },
-            //    new ExerciseType() {Name = "B-Pull-Up" },
-            //    new ExerciseType() {Name = "Triangle" },
-            //};
-            //try
-            //{
-            //    db.InsertAll(ListOfExercises);
-            //}
-            //catch (Exception)
-            //{
-
-            //}
         }
-
 
 
         ~DbManager()
@@ -60,7 +44,9 @@ namespace Exerciser
             public int Id { get; set; }
             [NotNull]
             public DateTime Day { get; set; }
-            public int Point { get; set; }
+            public double Weight { get; set; }
+            public int Recognized { get; set; }
+            public double Score { get; set; }
         }
 
         public class ExerciseType
@@ -69,20 +55,24 @@ namespace Exerciser
             public int Id { get; set; }
             [NotNull, Unique]
             public string Name { get; set; }
-            public int Value { get; set; }
+            public double Value { get; set; }
+            public int Ordero { get; set; }
         }
 
         public ObservableCollection<Exercise> GetExercises(DateTime day)
         {
-            var result = db.Query<ExerciseType>("Select * FROM ExerciseType");
+            var result = db.Query<ExerciseType>("Select * FROM ExerciseType ORDER BY Ordero DESC");
             ObservableCollection<Exercise> roc = new ObservableCollection<Exercise>();
             foreach (ExerciseType x in result)
             {
+
                 roc.Add(new Exercise()
                 {
                     Name = x.Name,
                     Repetitions = GetReps(x.Id, GetSDayId(day))
                 });
+
+
             }
             return roc;
         }
@@ -104,7 +94,7 @@ namespace Exerciser
             return db.Query<SDay>("Select * FROM SDay WHERE _id=?", SDayId).First().Day;
         }
 
-        public int GetReps(int ExerciseId, int SDayId)
+        public double GetReps(int ExerciseId, int SDayId)
         {
             var result = db.Query<Rep>("Select * FROM Rep WHERE ExerciseTypeId=? AND SDayId = ?", ExerciseId, SDayId);
             if (result.Count == 0)
@@ -113,16 +103,18 @@ namespace Exerciser
                 db.Insert(newRep);
                 return newRep.Repetition;
             }
+            else if (result[0].ExerciseTypeId == GetExerciseTypeIdByName("Weight")) return Math.Round((double)result[0].Repetition / 10, 1);
             return result[0].Repetition;
         }
 
         public int GetExerciseTypeIdByName(string name)
         {
             var result = db.Query<ExerciseType>("SELECT * FROM ExerciseType WHERE Name = ?", name);
+            if (result.Count == 0) return 0;
             return result[0].Id;
         }
 
-        public int GetValueByName(string name)
+        public double GetValueByName(string name)
         {
             var result = db.Query<ExerciseType>("SELECT * FROM ExerciseType WHERE Name = ?", name);
             return result[0].Value;
@@ -132,15 +124,16 @@ namespace Exerciser
         {
             foreach (Exercise x in list)
             {
-                GetReps(GetExerciseTypeIdByName(x.Name), GetSDayId(day));
-                var Command = db.CreateCommand("UPDATE Rep SET Repetition=? WHERE ExerciseTypeId=? AND SDayId=?", x.Repetitions, GetExerciseTypeIdByName(x.Name), GetSDayId(day));
+                SQLiteCommand Command;
+                if (x.Name == "Weight") Command = db.CreateCommand("UPDATE Rep SET Repetition=? WHERE ExerciseTypeId=? AND SDayId=?", Math.Round(x.Repetitions * 10, 0), GetExerciseTypeIdByName(x.Name), GetSDayId(day));
+                else Command = db.CreateCommand("UPDATE Rep SET Repetition=? WHERE ExerciseTypeId=? AND SDayId=?", x.Repetitions, GetExerciseTypeIdByName(x.Name), GetSDayId(day));
                 Command.ExecuteNonQuery();
             }
         }
 
-        public int GetScore(ObservableCollection<Exercise> collection)
+        public double GetScore(ObservableCollection<Exercise> collection)
         {
-            int sum = 0;
+            double sum = 0;
             foreach (var x in collection)
             {
                 sum += x.Repetitions * GetValueByName(x.Name);
@@ -148,12 +141,16 @@ namespace Exerciser
             return sum;
         }
 
-        public void AddExerciseType(string name, int value)
+        public void AddExerciseType(string name, double value)
         {
+            int heh = 0;
+            if (name == "Weight") heh = 2;
+            if (name == "Calories" || name == "Kcal") heh = 1;
             var it = new ExerciseType()
             {
                 Name = name,
-                Value = value
+                Value = value,
+                Ordero = heh
             };
             db.Insert(it);
         }
@@ -163,50 +160,13 @@ namespace Exerciser
             db.Delete(new ExerciseType { Id = GetExerciseTypeIdByName(name) });
         }
 
-        public void EditExerciseType(string name, string newName, int newValue)
+        public void EditExerciseType(string name, string newName, double newValue)
         {
-            db.Update(new ExerciseType { Id = GetExerciseTypeIdByName(name), Name = newName, Value = newValue });
+            int heh = 0;
+            if (newName == "Weight") heh = 2;
+            if (newName == "Calories" || newName == "Kcal") heh = 1;
+            db.CreateCommand("UPDATE ExerciseType SET Name=?, Value=?, Ordero=? WHERE _id=?", newName, newValue, heh, GetExerciseTypeIdByName(name)).ExecuteNonQuery();
         }
 
-        //public DateTime GetStartTime()
-        //{
-        //    var result = db.Query<Time>("SELECT * FROM Time WHERE IsActive=1");
-        //    if (result.Count != 0)
-        //        return result[0].StartTime;
-        //    else
-        //    {
-        //        var time = System.DateTime.Now;
-        //        InsertStartTime(time);
-        //        return time;
-        //    }
-        //}
-
-        //public long GetRecordTime()
-        //{
-        //    var result = db.Query<Time>("SELECT * FROM Time ORDER BY TimeInTicks DESC");
-
-        //    if (result.Count == 0)
-        //        return 5324543;
-        //    else
-        //    {
-        //        return result[0].TimeInTicks;
-        //    }
-        //}
-
-        //public void InsertStartTime(DateTime startTime)
-        //{
-        //    db.Insert(new Time()
-        //    {
-        //        StartTime = startTime,
-        //        IsActive = 1
-        //    });
-        //}
-
-        //public void InsertEndTime()
-        //{
-        //var nowTime = System.DateTime.Now;
-        //var Command = db.CreateCommand("UPDATE Time SET EndTime= ?, TimeInTicks=?, IsActive=0 WHERE IsActive = 1", nowTime, (nowTime - GetStartTime()).Ticks);
-        //Command.ExecuteNonQuery();
-        //}
     }
 }

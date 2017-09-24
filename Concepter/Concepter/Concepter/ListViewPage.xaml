@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Concepter.ListViewPage"
+             Title="Kindas"
+             >
+    <StackLayout Orientation="Vertical" HorizontalOptions="Center" Spacing="0">
+    <ListView ItemsSource="{Binding Kindas}"
+            ItemTapped="Handle_ItemTapped"
+              SelectedItem="{Binding Id}"
+            CachingStrategy="RecycleElement"
+              x:Name="Pagunia">
+        
+        <ListView.ItemTemplate>
+      <DataTemplate>
+        <ViewCell>
+                        <ViewCell.ContextActions>
+                            <MenuItem  Command="{Binding Path=BindingContext.EditCommand, Source={x:Reference Pagunia}}" CommandParameter="{Binding Id}" Text="Edit"/>
+                            <MenuItem  Command="{Binding Path=BindingContext.DeleteCommand, Source={x:Reference Pagunia}}" CommandParameter="{Binding Id}" Text="Delete"/>
+
+                        </ViewCell.ContextActions>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                            <Label Text="{Binding Name}"
+                               Style="{DynamicResource ListItemDetailTextStyle}"
+                               VerticalOptions="Center"
+                               TextColor="DarkRed"
+                               FontSize="Large"/>
+                        </StackLayout>
+        </ViewCell>
+      </DataTemplate>
+    </ListView.ItemTemplate>
+    
+  </ListView>
+        <Button Text="Add" FontSize="Large"
+                 Command="{Binding Path=BindingContext.AddCommand, Source={x:Reference Pagunia}}"/>
+        <Button Text="Back" FontSize="Large"
+                 Command="{Binding Path=BindingContext.BackCommand, Source={x:Reference Pagunia}}"/>
+    </StackLayout>
+</ContentPage>

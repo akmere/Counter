@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Concepter.AddPage"
+             Title="Projects">
+    <StackLayout Orientation="Vertical" VerticalOptions="Center" Spacing="5">
+        <Label Text="Name"
+               FontSize="Large"
+               HorizontalOptions="Center"/>
+        <Entry HorizontalOptions="Center"
+               WidthRequest="150"
+               x:Name="nameEntry"
+               Completed="nameEntry_Completed"/>
+        <Button FontSize="Large"
+                x:Name="buttonConfirm"
+                Text="Confirm"
+                HorizontalOptions="Center"
+                Clicked="Button_Clicked"/>
+        <Button FontSize="Large"
+                Text="Cancel"
+                x:Name="buttonCancel"
+                HorizontalOptions="Center"
+                Clicked="Button_Clicked_1"
+                />
+
+    </StackLayout>
+</ContentPage>

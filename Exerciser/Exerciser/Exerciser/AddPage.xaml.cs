@@ -55,5 +55,21 @@ namespace Exerciser
             }
 
         }
+
+        private void nameEntry_Completed(object sender, EventArgs e)
+        {
+            ValueEntry.Focus();
+        }
+
+        private void valueEntry_Completed(object sender, EventArgs e)
+        {
+            Button_Clicked(this, null);
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            NameEntry.Focus();
+        }
     }
 }

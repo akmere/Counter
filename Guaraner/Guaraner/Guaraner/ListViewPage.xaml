@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Guaraner.ListViewPage"
+             x:Name="LVP">
+    <StackLayout Orientation="Vertical" Spacing="0">
+
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+
+        <Button Text="&lt;" HorizontalOptions="Center" Command="{Binding Path=BindingContext.PreviousCommand, Source={x:Reference LVP}}"/>
+        <Label x:Name="label1"
+               HorizontalOptions="Center"
+               FontSize="30"
+               TextColor="DarkRed"
+                   WidthRequest="170"
+                   HeightRequest="1"
+                   HorizontalTextAlignment="Center"/>
+        <Button Text=">"
+                    HorizontalOptions="Center"
+                    Command="{Binding Path=BindingContext.NextCommand, Source={x:Reference LVP}}"/>
+    </StackLayout>
+
+    <ListView ItemsSource="{Binding Items}"
+            CachingStrategy="RecycleElement"
+                  x:Name="Pagunia" HeightRequest="400"
+              ItemTapped="Handle_ItemTapped">
+
+            <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <ViewCell.ContextActions>
+                        <MenuItem  Command="{Binding Path=BindingContext.EditCommand, Source={x:Reference Pagunia}}" CommandParameter="{Binding Hour}" Text="Edit"/>
+                            <MenuItem  Command="{Binding Path=BindingContext.DeleteCommand, Source={x:Reference Pagunia}}" CommandParameter="{Binding Hour}" Text="Delete"/>
+                        
+                        </ViewCell.ContextActions>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                            <Label Text="{Binding Hour}"
+                               Style="{DynamicResource ListItemDetailTextStyle}"
+                               VerticalOptions="Center"
+                               Margin="5,0,0,0"
+                               HorizontalTextAlignment="Center"
+                               TextColor="DarkGoldenrod"
+                               FontSize="Large"
+                               />
+                        </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+
+    </ListView>
+
+        <Button Text="Add Now" FontSize="Large" Margin="0,0,0,0"
+Command="{Binding Path=BindingContext.AddNowCommand, Source={x:Reference Pagunia}}"/>
+        <Button Text="Add Manually" FontSize="Large" Margin="0,0,0,0"
+Command="{Binding Path=BindingContext.AddManuallyCommand, Source={x:Reference Pagunia}}"/>
+    </StackLayout>
+</ContentPage>

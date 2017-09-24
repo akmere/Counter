@@ -15,8 +15,8 @@ namespace Exerciser
             get { return _name; }
             set { _name = value; OnPropertyChanged("Name"); }
         }
-        private int _repetitions;
-        public int Repetitions
+        private double _repetitions;
+        public double Repetitions
         {
             get { return _repetitions; }
             set { _repetitions = value; OnPropertyChanged("Repetitions"); }
