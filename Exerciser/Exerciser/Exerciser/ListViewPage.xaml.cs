@@ -25,8 +25,10 @@ namespace Exerciser
         {
             InitializeComponent();
             lv = this.FindByName<ListView>("Pagunia");
-            Db = new DbManager("moc2");
+            Db = new DbManager();
             dateLabel = this.FindByName<Label>("label1");
+            //scoreLabel = this.FindByName<Label>("scoreLabel");
+
             ADay = DateTime.Today;
             SetExercises(ADay);
             //dateLabel.Text = Eday.Day.Day.ToString() + "." + Eday.Day.Month.ToString() + "." + Eday.Day.Year.ToString();

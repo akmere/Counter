@@ -18,7 +18,7 @@ namespace Exerciser
         public AddPage()
         {
             InitializeComponent();
-            db = new DbManager("moc2");
+            db = new DbManager();
             NameEntry = this.FindByName<Entry>("nameEntry");
             ValueEntry = this.FindByName<Entry>("valueEntry");
         }

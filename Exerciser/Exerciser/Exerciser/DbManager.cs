@@ -11,8 +11,9 @@ namespace Exerciser
 {
     class DbManager
     {
+        const string dbPath = "moc2";
         SQLiteConnection db;
-        public DbManager(string dbPath)
+        public DbManager()
         {
             db = new SQLiteConnection(DependencyService.Get<IFileHelper>().GetLocalFilePath(dbPath));
             db.CreateTable<ExerciseType>();

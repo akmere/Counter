@@ -20,7 +20,7 @@ namespace Exerciser
         {
             InitializeComponent();
             oldName = parameter;
-            db = new DbManager("moc2");
+            db = new DbManager();
             NameEntry = this.FindByName<Entry>("nameEntry");
             ValueEntry = this.FindByName<Entry>("valueEntry");
             NameEntry.Text = parameter;
