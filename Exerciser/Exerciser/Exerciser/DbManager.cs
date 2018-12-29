@@ -108,6 +108,8 @@ namespace Exerciser
             return result[0].Repetition;
         }
 
+        //hehehehehehehheh
+
         public int GetExerciseTypeIdByName(string name)
         {
             var result = db.Query<ExerciseType>("SELECT * FROM ExerciseType WHERE Name = ?", name);
